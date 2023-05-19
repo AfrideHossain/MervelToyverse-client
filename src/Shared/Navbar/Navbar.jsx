@@ -25,13 +25,16 @@ const Navbar = () => {
             className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
           >
             <li>
-              <a>Item 1</a>
+              <Link>Home</Link>
             </li>
             <li tabIndex={0}>
-              <a className="justify-between">Parent</a>
+              <Link className="justify-between">All Toys</Link>
             </li>
             <li>
-              <a>Item 3</a>
+              <Link>Add A Toy</Link>
+            </li>
+            <li>
+              <Link>Blogs</Link>
             </li>
           </ul>
         </div>
@@ -42,13 +45,16 @@ const Navbar = () => {
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">
           <li>
-            <a>Item 1</a>
+            <Link>Home</Link>
           </li>
           <li tabIndex={0}>
-            <a>Parent</a>
+            <Link>All Toys</Link>
           </li>
           <li>
-            <a>Item 3</a>
+            <Link>Add A Toy</Link>
+          </li>
+          <li>
+            <Link>Blogs</Link>
           </li>
         </ul>
       </div>
@@ -64,16 +70,16 @@ const Navbar = () => {
             className="mt-3 p-2 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52"
           >
             <li>
-              <a className="justify-between">
+              <Link className="justify-between">
                 Profile
                 <span className="badge">New</span>
-              </a>
+              </Link>
             </li>
             <li>
-              <a>Settings</a>
+              <Link>Settings</Link>
             </li>
             <li>
-              <a>Logout</a>
+              <Link>Logout</Link>
             </li>
           </ul>
         </div>

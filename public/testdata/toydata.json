@@ -1,0 +1,58 @@
+[
+  {
+    "id": 1,
+    "picture": "https://i.ibb.co/y47dSkG/spiderman-3093340-960-720.jpg",
+    "name": "Spider Man Action Figure",
+    "price": 19.99,
+    "rating": 4.5
+  },
+  {
+    "id": 2,
+    "picture": "https://i.ibb.co/QbvrfYv/action-figures-7243788-960-720.jpg",
+    "name": "Cap, Ironman & Nick Fury Action Figure",
+    "price": 29.99,
+    "rating": 4.2
+  },
+  {
+    "id": 3,
+    "picture": "https://i.ibb.co/0s97gzz/marvel-5364165-960-720.jpg",
+    "name": "Doctor Strange, Star Lord & Hulk Action Figure",
+    "price": 39.99,
+    "rating": 4.8
+  },
+  {
+    "id": 4,
+    "picture": "https://i.ibb.co/kqqtr9j/toy-3930018-960-720.jpg",
+    "name": "Deadpool",
+    "price": 24.99,
+    "rating": 4.4
+  },
+  {
+    "id": 5,
+    "picture": "https://i.ibb.co/WFjkMdK/groot-super-hero-4340715-960-720.jpg",
+    "name": "Groot Plush Toy",
+    "price": 14.99,
+    "rating": 4.6
+  },
+  {
+    "id": 6,
+    "picture": "https://i.ibb.co/88xMhbd/star-lord-peter-jason-quill-4340716-960-720.jpg",
+    "name": "Star Lord Peter Jason Quill",
+    "price": 9.99,
+    "rating": 4.3
+  },
+  {
+    "id": 7,
+    "picture": "https://i.ibb.co/2ZS189r/black-widow-6208007-960-720.jpg",
+    "name": "Black Widow Action Figure",
+    "price": 17.99,
+    "rating": 4.1
+  },
+  {
+    "id": 8,
+    "picture": "https://i.ibb.co/hWYJ9yj/younglions-1525439-960-720.jpg",
+    "name": "Cap, Ironman & Hulk Action Figure",
+    "price": 34.99,
+    "rating": 4.7
+  }
+]

@@ -2,7 +2,14 @@ import { Link } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContextProvider";
 import { useContext } from "react";
 const Navbar = () => {
-  const { user } = useContext(AuthContext);
+  const { user, userLogout } = useContext(AuthContext);
+  const logoutHandler = () => {
+    userLogout()
+      .then(() => {})
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   return (
     <div className="navbar bg-base-100 sticky top-0 z-20">
       <div className="navbar-start">
@@ -62,27 +69,36 @@ const Navbar = () => {
         </ul>
       </div>
       <div className="navbar-end">
-        <div className="dropdown dropdown-end">
-          <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
-            <div className="w-10 rounded-full">
-              <img src={user?.photoURL} />
-            </div>
-          </label>
-          <ul
-            tabIndex={0}
-            className="mt-3 p-2 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52"
+        {!user ? (
+          <Link
+            className="btn bg-[#ed1d24] hover:bg-red-700 rounded-full border-0"
+            to="/login"
           >
-            <li>
-              <Link className="justify-between">{user?.displayName}</Link>
-            </li>
-            <li>
-              <Link>{user?.email}</Link>
-            </li>
-            <li>
-              <Link>Logout</Link>
-            </li>
-          </ul>
-        </div>
+            Login
+          </Link>
+        ) : (
+          <div className="dropdown dropdown-end">
+            <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
+              <div className="w-10 rounded-full">
+                <img src={user?.photoURL} />
+              </div>
+            </label>
+            <ul
+              tabIndex={0}
+              className="mt-3 p-2 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52"
+            >
+              <li>
+                <Link className="justify-between">{user?.displayName}</Link>
+              </li>
+              <li>
+                <Link>{user?.email}</Link>
+              </li>
+              <li>
+                <button onClick={logoutHandler}>Logout</button>
+              </li>
+            </ul>
+          </div>
+        )}
       </div>
     </div>
   );

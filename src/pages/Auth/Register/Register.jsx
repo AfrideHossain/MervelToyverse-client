@@ -4,27 +4,21 @@ import { Link } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "../../../context/AuthContextProvider";
 import { updateProfile } from "firebase/auth";
-import Spinner from "../../../Shared/Spinner/Spinner";
 
 const Register = () => {
-  const { userCreateWithEmailAndPass } = useContext(AuthContext);
+  const { userCreateWithEmailAndPass, googleSignIn } = useContext(AuthContext);
+
   const registerHandler = (event) => {
     event.preventDefault();
     const form = event.target;
-    let email = form.email.value;
-    let username = form.username.value;
-    let photourl = form.photourl.value;
-    let pass = form.password.value;
-    console.log({
-      email,
-      username,
-      photourl,
-      pass,
-    });
+    let email = form.email?.value;
+    let username = form.username?.value;
+    let photourl = form.photourl?.value;
+    let pass = form.password?.value;
+
     userCreateWithEmailAndPass(email, pass)
       .then((createdUser) => {
         let user = createdUser.user;
-        console.log("before editing:", user);
         updateProfile(user, {
           displayName: username,
           photoURL: photourl,
@@ -33,6 +27,16 @@ const Register = () => {
           .catch((err) => {
             console.log(err);
           });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const googleSignInHandler = () => {
+    googleSignIn()
+      .then((loggedInUser) => {
+        console.log("logged: ", loggedInUser.user);
       })
       .catch((err) => {
         console.log(err);
@@ -116,7 +120,10 @@ const Register = () => {
             </div>
           </form>
           <p className="my-5 text-[#ed1d24] text-center">Or</p>
-          <button className="btn btn-outline btn-success w-full gap-3">
+          <button
+            className="btn btn-outline btn-success w-full gap-3"
+            onClick={googleSignInHandler}
+          >
             <FaGoogle className="text-lg" />
             Login With Google
           </button>

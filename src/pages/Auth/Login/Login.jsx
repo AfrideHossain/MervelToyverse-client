@@ -1,7 +1,34 @@
 import { HiEnvelope, HiOutlineKey } from "react-icons/hi2";
 import { FaGoogle } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../../context/AuthContextProvider";
+import { useContext } from "react";
 const Login = () => {
+  const { userLoginWithEmailAndPass, googleSignIn } = useContext(AuthContext);
+  const loginHandler = (event) => {
+    event.preventDefault();
+    const form = event.target;
+    let email = form.email?.value;
+    let pass = form.password?.value;
+
+    userLoginWithEmailAndPass(email, pass)
+      .then((createdUser) => {
+        let user = createdUser.user;
+        console.log(user);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  const googleSignInHandler = () => {
+    googleSignIn()
+      .then((loggedInUser) => {
+        console.log("logged: ", loggedInUser.user);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   return (
     <>
       <div className="divStyle w-screen h-screen flex justify-center items-center">
@@ -9,7 +36,7 @@ const Login = () => {
           <h1 className="text-4xl text-center text-gray-200 font-semibold mb-8">
             Welcome Back Chief
           </h1>
-          <form>
+          <form onClick={loginHandler}>
             <div className="space-y-3">
               <div className="form-control w-full">
                 <label className="input-group">
@@ -20,6 +47,8 @@ const Login = () => {
                     type="email"
                     placeholder="info@site.com"
                     className="input input-bordered w-full"
+                    name="username"
+                    required
                   />
                 </label>
               </div>
@@ -29,9 +58,11 @@ const Login = () => {
                     <HiOutlineKey className="w-5 h-5" />
                   </span>
                   <input
-                    type="email"
+                    type="password"
                     placeholder="Password"
                     className="input input-bordered w-full"
+                    name="password"
+                    required
                   />
                 </label>
               </div>
@@ -51,7 +82,10 @@ const Login = () => {
             </div>
           </form>
           <p className="my-5 text-[#ed1d24] text-center">Or</p>
-          <button className="btn btn-outline btn-success w-full gap-3">
+          <button
+            className="btn btn-outline btn-success w-full gap-3"
+            onClick={googleSignInHandler}
+          >
             <FaGoogle className="text-lg" />
             Login With Google
           </button>

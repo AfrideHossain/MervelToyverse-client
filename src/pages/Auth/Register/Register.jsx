@@ -1,12 +1,14 @@
 import { HiEnvelope, HiOutlineKey, HiUser, HiPhoto } from "react-icons/hi2";
 import { FaGoogle } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { AuthContext } from "../../../context/AuthContextProvider";
 import { updateProfile } from "firebase/auth";
+import { toast } from "react-toastify";
 
 const Register = () => {
   const { userCreateWithEmailAndPass, googleSignIn } = useContext(AuthContext);
+  const [error, setError] = useState("");
 
   const registerHandler = (event) => {
     event.preventDefault();
@@ -30,6 +32,8 @@ const Register = () => {
       })
       .catch((err) => {
         console.log(err);
+        setError(err.message);
+        toast.error(`😪 ${err.message}`);
       });
   };
 
@@ -40,6 +44,8 @@ const Register = () => {
       })
       .catch((err) => {
         console.log(err);
+        setError(err.message);
+        toast.error(`😪 ${err.message}`);
       });
   };
   return (
@@ -49,6 +55,7 @@ const Register = () => {
           <h1 className="text-4xl text-center text-gray-200 font-semibold mb-8">
             Join Marvel Toyverse
           </h1>
+          <p className="text-red-500 mb-3">{error}</p>
           <form onSubmit={registerHandler}>
             <div className="space-y-3">
               <div className="form-control w-full">

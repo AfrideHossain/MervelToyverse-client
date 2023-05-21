@@ -2,15 +2,16 @@ import { HiEnvelope, HiOutlineKey } from "react-icons/hi2";
 import { FaGoogle } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../../context/AuthContextProvider";
-import { useContext } from "react";
+import { useContext, useState } from "react";
+import { toast } from "react-toastify";
 const Login = () => {
   const { userLoginWithEmailAndPass, googleSignIn } = useContext(AuthContext);
+  const [error, setError] = useState("");
   const loginHandler = (event) => {
     event.preventDefault();
     const form = event.target;
     let email = form.email?.value;
     let pass = form.password?.value;
-
     userLoginWithEmailAndPass(email, pass)
       .then((createdUser) => {
         let user = createdUser.user;
@@ -18,6 +19,8 @@ const Login = () => {
       })
       .catch((err) => {
         console.log(err);
+        setError(err.message);
+        toast.error(`😪 ${err.message}`);
       });
   };
   const googleSignInHandler = () => {
@@ -36,7 +39,8 @@ const Login = () => {
           <h1 className="text-4xl text-center text-gray-200 font-semibold mb-8">
             Welcome Back Chief
           </h1>
-          <form onClick={loginHandler}>
+          <p className="text-red-500 mb-3">{error}</p>
+          <form onSubmit={loginHandler}>
             <div className="space-y-3">
               <div className="form-control w-full">
                 <label className="input-group">
@@ -47,7 +51,7 @@ const Login = () => {
                     type="email"
                     placeholder="info@site.com"
                     className="input input-bordered w-full"
-                    name="username"
+                    name="email"
                     required
                   />
                 </label>

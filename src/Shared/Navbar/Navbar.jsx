@@ -1,8 +1,9 @@
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContextProvider";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 const Navbar = () => {
   const { user, userLogout } = useContext(AuthContext);
+  const [showUsername, setShowUsername] = useState(false);
   const logoutHandler = () => {
     userLogout()
       .then(() => {})
@@ -80,7 +81,11 @@ const Navbar = () => {
           <div className="dropdown dropdown-end">
             <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
               <div className="w-10 rounded-full">
-                <img src={user?.photoURL} />
+                <img
+                  src={user?.photoURL}
+                  onMouseOver={() => setShowUsername(true)}
+                  onMouseLeave={() => setShowUsername(false)}
+                />
               </div>
             </label>
             <ul
@@ -97,6 +102,15 @@ const Navbar = () => {
                 <button onClick={logoutHandler}>Logout</button>
               </li>
             </ul>
+          </div>
+        )}
+        {showUsername && (
+          <div className="toast toast-top toast-end mt-14">
+            <div className="alert alert-info">
+              <div>
+                <span>{user?.displayName}</span>
+              </div>
+            </div>
           </div>
         )}
       </div>

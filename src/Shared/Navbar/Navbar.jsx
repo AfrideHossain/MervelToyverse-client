@@ -1,5 +1,8 @@
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../context/AuthContextProvider";
+import { useContext } from "react";
 const Navbar = () => {
+  const { user } = useContext(AuthContext);
   return (
     <div className="navbar bg-base-100 sticky top-0 z-20">
       <div className="navbar-start">
@@ -62,7 +65,7 @@ const Navbar = () => {
         <div className="dropdown dropdown-end">
           <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
             <div className="w-10 rounded-full">
-              <img src="/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+              <img src={user?.photoURL} />
             </div>
           </label>
           <ul
@@ -70,13 +73,10 @@ const Navbar = () => {
             className="mt-3 p-2 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52"
           >
             <li>
-              <Link className="justify-between">
-                Profile
-                <span className="badge">New</span>
-              </Link>
+              <Link className="justify-between">{user?.displayName}</Link>
             </li>
             <li>
-              <Link>Settings</Link>
+              <Link>{user?.email}</Link>
             </li>
             <li>
               <Link>Logout</Link>

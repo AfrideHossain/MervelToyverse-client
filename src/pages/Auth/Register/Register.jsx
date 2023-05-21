@@ -1,8 +1,43 @@
 import { HiEnvelope, HiOutlineKey, HiUser, HiPhoto } from "react-icons/hi2";
 import { FaGoogle } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { useContext } from "react";
+import { AuthContext } from "../../../context/AuthContextProvider";
+import { updateProfile } from "firebase/auth";
+import Spinner from "../../../Shared/Spinner/Spinner";
 
 const Register = () => {
+  const { userCreateWithEmailAndPass } = useContext(AuthContext);
+  const registerHandler = (event) => {
+    event.preventDefault();
+    const form = event.target;
+    let email = form.email.value;
+    let username = form.username.value;
+    let photourl = form.photourl.value;
+    let pass = form.password.value;
+    console.log({
+      email,
+      username,
+      photourl,
+      pass,
+    });
+    userCreateWithEmailAndPass(email, pass)
+      .then((createdUser) => {
+        let user = createdUser.user;
+        console.log("before editing:", user);
+        updateProfile(user, {
+          displayName: username,
+          photoURL: photourl,
+        })
+          .then(() => {})
+          .catch((err) => {
+            console.log(err);
+          });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   return (
     <>
       <div className="divStyle w-screen h-screen flex justify-center items-center">
@@ -10,7 +45,7 @@ const Register = () => {
           <h1 className="text-4xl text-center text-gray-200 font-semibold mb-8">
             Join Marvel Toyverse
           </h1>
-          <form>
+          <form onSubmit={registerHandler}>
             <div className="space-y-3">
               <div className="form-control w-full">
                 <label className="input-group">
@@ -20,6 +55,7 @@ const Register = () => {
                   <input
                     type="text"
                     placeholder="Username"
+                    name="username"
                     className="input input-bordered w-full"
                   />
                 </label>
@@ -32,7 +68,9 @@ const Register = () => {
                   <input
                     type="email"
                     placeholder="info@site.com"
+                    name="email"
                     className="input input-bordered w-full"
+                    required
                   />
                 </label>
               </div>
@@ -44,6 +82,7 @@ const Register = () => {
                   <input
                     type="text"
                     placeholder="Photo url"
+                    name="photourl"
                     className="input input-bordered w-full"
                   />
                 </label>
@@ -54,8 +93,9 @@ const Register = () => {
                     <HiOutlineKey className="w-5 h-5" />
                   </span>
                   <input
-                    type="email"
+                    type="password"
                     placeholder="Password"
+                    name="password"
                     className="input input-bordered w-full"
                   />
                 </label>

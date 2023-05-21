@@ -18,3 +18,11 @@
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
 }
+.divStyle {
+  background-image: url("./assets/images/spiderPosterBg.jpg");
+  background-position: center;
+  background-size: cover;
+  background-attachment: fixed;
+  background-origin: border-box;
+  background-clip: border-box;
+}

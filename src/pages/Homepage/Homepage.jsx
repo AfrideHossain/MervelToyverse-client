@@ -17,7 +17,7 @@ const Homepage = () => {
       <div style={divStyle}>
         <Hero />
         <PhotoGallery />
-        <ShopCategory />  
+        <ShopCategory />
       </div>
     </>
   );

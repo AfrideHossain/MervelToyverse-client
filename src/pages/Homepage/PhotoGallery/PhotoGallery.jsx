@@ -1,3 +1,5 @@
+import { Fragment } from "react";
+
 const PhotoGallery = () => {
   const photos = [
     "https://i.ibb.co/88xMhbd/star-lord-peter-jason-quill-4340716-960-720.jpg",
@@ -19,11 +21,11 @@ const PhotoGallery = () => {
       </p>
       <div className="grid md:grid-cols-4 mt-4 p-4 gap-3">
         {photos.map((photo, indx) => (
-          <>
-            <div key={indx} className="h-auto flex items-center">
+          <Fragment key={indx}>
+            <div className="h-auto flex items-center">
               <img className="h-full rounded-lg" src={photo} />
             </div>
-          </>
+          </Fragment>
         ))}
       </div>
     </div>

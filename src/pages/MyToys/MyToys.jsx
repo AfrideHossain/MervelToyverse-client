@@ -1,11 +1,10 @@
-import { Fragment, useState } from "react";
+import { Fragment } from "react";
 import { useLoaderData } from "react-router-dom";
+import { HiOutlineTrash, HiOutlinePencilSquare } from "react-icons/hi2";
 
-const AllToys = () => {
+const MyToys = () => {
   // TODO pagination
   const toys = useLoaderData();
-  const [itemsPerPage, setItemsPerPage] = useState(20);
-  const itemsPerPageArray = [5, 10, 15, 20, 25, 30];
   return (
     <>
       <div className="overflow-x-auto w-screen">
@@ -22,8 +21,8 @@ const AllToys = () => {
           </thead>
           <tbody>
             {toys &&
-              toys.map((toy) => (
-                <Fragment key={toy.id}>
+              toys.map((toy, indx) => (
+                <Fragment key={indx}>
                   <tr>
                     <td>
                       <div className="flex items-center space-x-3">
@@ -47,7 +46,14 @@ const AllToys = () => {
                     <td>{toy?.quantity}</td>
                     <td>{toy?.sellerName}</td>
                     <th>
-                      <button className="btn btn-primary">details</button>
+                      <div className="flex gap-2">
+                        <button className="btn">
+                          <HiOutlinePencilSquare className="text-white h-5 w-5" />
+                        </button>
+                        <button className="btn">
+                          <HiOutlineTrash className="text-white h-5 w-5" />
+                        </button>
+                      </div>
                     </th>
                   </tr>
                 </Fragment>
@@ -65,31 +71,8 @@ const AllToys = () => {
           </tfoot>
         </table>
       </div>
-      <div className="w-full my-10 flex justify-center gap-5">
-        <select
-          className="select w-max border-none"
-          onChange={(e) => {
-            setItemsPerPage(e.target.value);
-          }}
-        >
-          <option disabled selected>
-            Select items per page
-          </option>
-          {itemsPerPageArray.map((itemsNumber) => (
-            <>
-              <option>{itemsNumber}</option>
-            </>
-          ))}
-        </select>
-        <div className="btn-group">
-          <button className="btn">1</button>
-          <button className="btn btn-active">2</button>
-          <button className="btn">3</button>
-          <button className="btn">4</button>
-        </div>
-      </div>
     </>
   );
 };
 
-export default AllToys;
+export default MyToys;

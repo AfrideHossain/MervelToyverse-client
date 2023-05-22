@@ -6,6 +6,8 @@ import Login from "../pages/Auth/Login/Login";
 import Register from "../pages/Auth/Register/Register";
 import AddToy from "../pages/AddToy/AddToy";
 import AllToys from "../pages/AllToys/AllToys";
+import MyToys from "../pages/MyToys/MyToys";
+import ToyDetails from "../pages/ToyDetails/ToyDetails";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -35,6 +37,18 @@ const router = createBrowserRouter([
           let fetchedToys = await fetch("testdata/toydata.json");
           return (await fetchedToys).json();
         },
+      },
+      {
+        path: "/mytoys",
+        element: <MyToys />,
+        loader: async () => {
+          let fetchedToys = await fetch("testdata/toydata.json");
+          return (await fetchedToys).json();
+        },
+      },
+      {
+        path: "/toy",
+        element: <ToyDetails />,
       },
     ],
   },

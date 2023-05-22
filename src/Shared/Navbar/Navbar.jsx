@@ -59,15 +59,15 @@ const Navbar = () => {
             <Link to="/">Home</Link>
           </li>
           <li tabIndex={0}>
-            <Link to="toys">All Toys</Link>
+            <Link to="/toys">All Toys</Link>
           </li>
           {user && (
             <>
               <li>
-                <Link to="addtoy">Add A Toy</Link>
+                <Link to="/addtoy">Add A Toy</Link>
               </li>
               <li>
-                <Link>My Toys</Link>
+                <Link to="/mytoys">My Toys</Link>
               </li>
             </>
           )}

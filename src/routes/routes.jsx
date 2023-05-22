@@ -31,6 +31,10 @@ const router = createBrowserRouter([
       {
         path: "/toys",
         element: <AllToys />,
+        loader: async () => {
+          let fetchedToys = await fetch("testdata/toydata.json");
+          return (await fetchedToys).json();
+        },
       },
     ],
   },

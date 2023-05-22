@@ -56,14 +56,21 @@ const Navbar = () => {
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">
           <li>
-            <Link>Home</Link>
+            <Link to="/">Home</Link>
           </li>
           <li tabIndex={0}>
-            <Link>All Toys</Link>
+            <Link to="toys">All Toys</Link>
           </li>
-          <li>
-            <Link>Add A Toy</Link>
-          </li>
+          {user && (
+            <>
+              <li>
+                <Link to="addtoy">Add A Toy</Link>
+              </li>
+              <li>
+                <Link>My Toys</Link>
+              </li>
+            </>
+          )}
           <li>
             <Link>Blogs</Link>
           </li>

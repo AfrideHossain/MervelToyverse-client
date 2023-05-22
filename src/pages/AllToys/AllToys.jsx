@@ -72,13 +72,17 @@ const AllToys = () => {
             setItemsPerPage(e.target.value);
           }}
         >
-          <option disabled selected>
+          <option
+            disabled
+            defaultValue="Select items per page"
+            value={itemsPerPage}
+          >
             Select items per page
           </option>
-          {itemsPerPageArray.map((itemsNumber) => (
-            <>
+          {itemsPerPageArray.map((itemsNumber, indx) => (
+            <Fragment key={indx}>
               <option>{itemsNumber}</option>
-            </>
+            </Fragment>
           ))}
         </select>
         <div className="btn-group">

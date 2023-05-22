@@ -8,6 +8,7 @@ import AddToy from "../pages/AddToy/AddToy";
 import AllToys from "../pages/AllToys/AllToys";
 import MyToys from "../pages/MyToys/MyToys";
 import ToyDetails from "../pages/ToyDetails/ToyDetails";
+import SecureRoute from "../SecureRoute/SecureRoute";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -40,7 +41,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/mytoys",
-        element: <MyToys />,
+        element: (
+          <SecureRoute>
+            <MyToys />
+          </SecureRoute>
+        ),
         loader: async () => {
           let fetchedToys = await fetch("testdata/toydata.json");
           return (await fetchedToys).json();

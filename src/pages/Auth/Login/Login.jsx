@@ -7,15 +7,16 @@ import { toast } from "react-toastify";
 const Login = () => {
   const { userLoginWithEmailAndPass, googleSignIn } = useContext(AuthContext);
   const [error, setError] = useState("");
+
   const loginHandler = (event) => {
     event.preventDefault();
     const form = event.target;
     let email = form.email?.value;
     let pass = form.password?.value;
     userLoginWithEmailAndPass(email, pass)
-      .then((createdUser) => {
-        let user = createdUser.user;
-        console.log(user);
+      .then((loggedInUser) => {
+        let user = loggedInUser.user;
+        console.log(user.displayName);
       })
       .catch((err) => {
         console.log(err);
@@ -26,7 +27,8 @@ const Login = () => {
   const googleSignInHandler = () => {
     googleSignIn()
       .then((loggedInUser) => {
-        console.log("logged: ", loggedInUser.user);
+        let user = loggedInUser.user;
+        console.log(user.displayName);
       })
       .catch((err) => {
         console.log(err);

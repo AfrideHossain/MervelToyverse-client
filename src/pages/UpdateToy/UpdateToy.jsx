@@ -1,8 +1,7 @@
-import { useContext } from "react";
+import { useLoaderData } from "react-router-dom";
 import spiderBg from "../../assets/images/spiderPosterBg.jpg";
-import { AuthContext } from "../../context/AuthContextProvider";
-
-const AddToy = () => {
+import { useState } from "react";
+const UpdateToy = () => {
   const divStyle = {
     backgroundImage: `url(${spiderBg})`,
     backgroundPosition: "center",
@@ -11,33 +10,25 @@ const AddToy = () => {
     backgroundOrigin: "border-box",
     backgroundClip: "border-box",
   };
-  const { user } = useContext(AuthContext);
+  const toyInfo = useLoaderData();
+  const [description, setDescription] = useState(toyInfo.description);
+  const [price, setPrice] = useState(toyInfo.price);
+  const [quantity, setQuantity] = useState(toyInfo.quantity);
 
-  const addToyHandler = (e) => {
+  const updateHandler = (e) => {
     e.preventDefault();
-    const form = e.target;
-    const sellerName = form.sellerName.value;
-    const sellerEmail = form.sellerEmail.value;
-    const name = form.name.value;
-    const price = form.price.value;
-    const description = form.description.value;
-    const quantity = form.quantity.value;
-    const rating = form.rating.value;
-    const bodyData = {
-      sellerName,
-      sellerEmail,
-      name,
+    // const form = e.target;
+    console.log({
       price,
-      description,
       quantity,
-      rating,
-    };
-    fetch(`${import.meta.env.VITE_BACKEND}/addtoy`, {
-      method: "POST",
+      description,
+    });
+    fetch(`${import.meta.env.VITE_BACKEND}/toy/${toyInfo._id}`, {
+      method: "PATCH",
       headers: {
         "content-type": "application/json",
       },
-      body: JSON.stringify(bodyData),
+      body: JSON.stringify({ price, quantity, description }),
     })
       .then((res) => res.json())
       .then((data) => {
@@ -48,48 +39,19 @@ const AddToy = () => {
     <div style={divStyle} className="flex justify-center items-center h-screen">
       <div className="w-full m-5 md:max-w-md p-3 bg-black rounded-md">
         <h1 className="text-4xl font-bold text-red-600 text-center">
-          Add A Toy
+          Update Toy Details
         </h1>
-        <form className="mt-3" onSubmit={() => addToyHandler()}>
+        <form className="mt-3" onSubmit={updateHandler}>
           <div className="form-control w-full max-w-full">
             <label className="label">
-              <span className="label-text text-white text-base">
-                Seller name?
-              </span>
-            </label>
-            <input
-              type="text"
-              placeholder="Seller name"
-              value={user?.displayName}
-              name="sellerName"
-              className="input input-bordered w-full max-w-full"
-            />
-          </div>
-          <div className="form-control w-full max-w-full">
-            <label className="label">
-              <span className="label-text text-white text-base">
-                Seller email?
-              </span>
-            </label>
-            <input
-              type="email"
-              placeholder="Seller email"
-              value={user?.email}
-              name="sellerEmail"
-              className="input input-bordered w-full max-w-full"
-            />
-          </div>
-          <div className="form-control w-full max-w-full">
-            <label className="label">
-              <span className="label-text text-white text-base">
-                What is Toy name?
-              </span>
+              <span className="label-text text-white text-base">Toy name</span>
             </label>
             <input
               type="text"
               placeholder="Toy name"
-              name="Name"
+              value={toyInfo.name}
               className="input input-bordered w-full max-w-full"
+              readOnly
             />
           </div>
           <div className="form-control w-full max-w-full">
@@ -102,6 +64,10 @@ const AddToy = () => {
               className="textarea textarea-bordered h-16"
               placeholder="Detail description"
               name="description"
+              value={description}
+              onChange={(e) => {
+                setDescription(e.target.value);
+              }}
             ></textarea>
           </div>
           <div className="form-control w-full max-w-full flex-row gap-4">
@@ -113,6 +79,10 @@ const AddToy = () => {
                 type="number"
                 placeholder="Price"
                 name="price"
+                value={price}
+                onChange={(e) => {
+                  setPrice(e.target.value);
+                }}
                 className="input input-bordered w-full max-w-full"
               />
             </div>
@@ -123,7 +93,8 @@ const AddToy = () => {
               <input
                 type="number"
                 placeholder="Rating"
-                name="rating"
+                value={toyInfo.rating}
+                readOnly
                 className="input input-bordered w-full max-w-full"
               />
             </div>
@@ -138,7 +109,8 @@ const AddToy = () => {
               <input
                 type="text"
                 placeholder="Sub category"
-                name="category"
+                value={toyInfo.category}
+                readOnly
                 className="input input-bordered w-full max-w-full"
               />
             </div>
@@ -152,6 +124,10 @@ const AddToy = () => {
                 type="number"
                 placeholder="Available quantity"
                 name="quantity"
+                value={quantity}
+                onChange={(e) => {
+                  setQuantity(e.target.value);
+                }}
                 className="input input-bordered w-full max-w-full"
               />
             </div>
@@ -159,7 +135,7 @@ const AddToy = () => {
           <div className="form-control w-full max-w-full mt-4">
             <input
               type="submit"
-              value="Add"
+              value="Update"
               className="btn bg-[#ed1d24] border-0 hover:bg-red-700"
             />
           </div>
@@ -169,4 +145,4 @@ const AddToy = () => {
   );
 };
 
-export default AddToy;
+export default UpdateToy;

@@ -9,6 +9,7 @@ import AllToys from "../pages/AllToys/AllToys";
 import MyToys from "../pages/MyToys/MyToys";
 import ToyDetails from "../pages/ToyDetails/ToyDetails";
 import SecureRoute from "../SecureRoute/SecureRoute";
+import UpdateToy from "../pages/UpdateToy/UpdateToy";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -35,8 +36,11 @@ const router = createBrowserRouter([
         path: "/toys",
         element: <AllToys />,
         loader: async () => {
-          let fetchedToys = await fetch("testdata/toydata.json");
-          return (await fetchedToys).json();
+          let fetchedToys = await fetch(`${import.meta.env.VITE_BACKEND}/toys`);
+          let fetchedToysRes = await fetchedToys.json();
+          if (fetchedToysRes.success) {
+            return fetchedToysRes.toys;
+          }
         },
       },
       {
@@ -46,9 +50,22 @@ const router = createBrowserRouter([
             <MyToys />
           </SecureRoute>
         ),
-        loader: async () => {
-          let fetchedToys = await fetch("testdata/toydata.json");
-          return (await fetchedToys).json();
+      },
+      {
+        path: "/updateToy/:id",
+        element: (
+          <SecureRoute>
+            <UpdateToy />
+          </SecureRoute>
+        ),
+        loader: async ({ params }) => {
+          let fetchedToys = await fetch(
+            `${import.meta.env.VITE_BACKEND}/toy/${params.id}`
+          );
+          let fetchedToysRes = await fetchedToys.json();
+          if (fetchedToysRes.success) {
+            return fetchedToysRes.toy;
+          }
         },
       },
       {

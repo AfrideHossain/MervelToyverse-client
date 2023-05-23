@@ -40,7 +40,8 @@ const Register = () => {
   const googleSignInHandler = () => {
     googleSignIn()
       .then((loggedInUser) => {
-        console.log("logged: ", loggedInUser.user);
+        let user = loggedInUser.user;
+        console.log(user.displayName);
       })
       .catch((err) => {
         console.log(err);

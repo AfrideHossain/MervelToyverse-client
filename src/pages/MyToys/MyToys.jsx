@@ -1,10 +1,35 @@
-import { Fragment } from "react";
-import { useLoaderData } from "react-router-dom";
+import { Fragment, useEffect, useState } from "react";
 import { HiOutlineTrash, HiOutlinePencilSquare } from "react-icons/hi2";
+import { Link } from "react-router-dom";
 
 const MyToys = () => {
   // TODO pagination
-  const toys = useLoaderData();
+  const [toys, setToys] = useState();
+  useEffect(() => {
+    let fetchedToys = fetch(`${import.meta.env.VITE_BACKEND}/mytoys`, {
+      method: "GET",
+      headers: {
+        authtoken: `Bearer ${localStorage.getItem(
+          "marvel-toyverse-auth-token"
+        )}`,
+      },
+    });
+    fetchedToys
+      .then((res) => res.json())
+      .then((toysdata) => {
+        setToys(toysdata.toys);
+      });
+  }, [toys]);
+  const deleteToy = (id) => {
+    let fetchedToys = fetch(`${import.meta.env.VITE_BACKEND}/toy/${id}`, {
+      method: "DELETE",
+    });
+    fetchedToys
+      .then((res) => res.json())
+      .then((deleteRes) => {
+        console.log(deleteRes);
+      });
+  };
   return (
     <>
       <div className="overflow-x-auto w-screen">
@@ -47,10 +72,13 @@ const MyToys = () => {
                     <td>{toy?.sellerName}</td>
                     <th>
                       <div className="flex gap-2">
-                        <button className="btn">
+                        <Link className="btn" to={`/updatetoy/${toy._id}`}>
                           <HiOutlinePencilSquare className="text-white h-5 w-5" />
-                        </button>
-                        <button className="btn">
+                        </Link>
+                        <button
+                          className="btn"
+                          onClick={() => deleteToy(toy._id)}
+                        >
                           <HiOutlineTrash className="text-white h-5 w-5" />
                         </button>
                       </div>

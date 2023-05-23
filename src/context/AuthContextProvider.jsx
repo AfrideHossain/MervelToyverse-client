@@ -53,6 +53,24 @@ const AuthContextProvider = ({ children }) => {
     let unsubscribe = onAuthStateChanged(auth, (currentUserInfo) => {
       setUser(currentUserInfo);
       setLoading(false);
+      if (currentUserInfo && currentUserInfo.email) {
+        fetch(`${import.meta.env.VITE_BACKEND}/gentoken`, {
+          method: "POST",
+          headers: {
+            "Content-type": "application/json",
+          },
+          body: JSON.stringify({
+            username: currentUserInfo?.displayName,
+            email: currentUserInfo?.email,
+          }),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            localStorage.setItem("marvel-toyverse-auth-token", data.token);
+          });
+      } else {
+        localStorage.removeItem("marvel-toyverse-auth-token");
+      }
     });
     return () => {
       return unsubscribe();

@@ -11,25 +11,25 @@ const ShopCategory = () => {
         </h1>
         <TabList className="mt-4 flex w-fit bg-[#ed1d24] space-x-2 rounded-t-md text-white cursor-pointer">
           <Tab className="px-4 py-2 text-white rounded-md hover:bg-red-600 transition-colors duration-300 outline-none">
-            Avengers Toys
+            Action Figures
           </Tab>
           <Tab className="px-4 py-2 text-white rounded-md hover:bg-red-600 transition-colors duration-300 outline-none">
-            Guardians Of Galaxy Toys
+            Props & Replicas
           </Tab>
           <Tab className="px-4 py-2 text-white rounded-md hover:bg-red-600 transition-colors duration-300 outline-none">
-            Spider Man Toys
+            Vehicles
           </Tab>
         </TabList>
 
         <div className="mt-8 md:w-fit mx-auto p-4">
           <TabPanel>
-            <TabContainer categoryName="avengers" />
+            <TabContainer categoryName="Action Figures" />
           </TabPanel>
           <TabPanel>
-            <TabContainer categoryName="gurdiansOfGalaxy" />
+            <TabContainer categoryName="Props & Replicas" />
           </TabPanel>
           <TabPanel>
-            <TabContainer categoryName="spiderMan" />
+            <TabContainer categoryName="Vehicles" />
           </TabPanel>
         </div>
       </Tabs>

@@ -1,11 +1,36 @@
-import { Fragment, useState } from "react";
-import { useLoaderData } from "react-router-dom";
+import { Fragment, useEffect, useState } from "react";
+import { Link, useLoaderData } from "react-router-dom";
 
 const AllToys = () => {
   // TODO pagination
-  const toys = useLoaderData();
-  const [itemsPerPage, setItemsPerPage] = useState(20);
-  const itemsPerPageArray = [5, 10, 15, 20, 25, 30];
+  const totalToys = useLoaderData();
+  const [toys, setToys] = useState([]);
+  const totalItems = totalToys.length;
+  const itemsPerPage = 20;
+  const totalPages = Math.ceil(totalItems / itemsPerPage);
+  const [currentPage, setCurrentPage] = useState(0);
+  const pages = () => {
+    let pagesArray = [];
+    for (let i = 0; i < totalPages; i++) {
+      pagesArray.push(i);
+    }
+    return pagesArray;
+  };
+  // console.log(pages());
+  const pageChangeHandler = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
+  useEffect(() => {
+    fetch(
+      `${
+        import.meta.env.VITE_BACKEND
+      }/toys?page=${currentPage}&limit=${itemsPerPage}`
+    )
+      .then((res) => res.json())
+      .then((fetchedRes) => {
+        setToys(fetchedRes.toys);
+      });
+  }, [currentPage]);
   return (
     <>
       <div className="overflow-x-auto w-screen">
@@ -23,7 +48,7 @@ const AllToys = () => {
           <tbody>
             {toys &&
               toys.map((toy) => (
-                <Fragment key={toy.id}>
+                <Fragment key={toy._id}>
                   <tr>
                     <td>
                       <div className="flex items-center space-x-3">
@@ -47,7 +72,9 @@ const AllToys = () => {
                     <td>{toy?.quantity}</td>
                     <td>{toy?.sellerName}</td>
                     <th>
-                      <button className="btn btn-primary">details</button>
+                      <Link to={`/toy/${toy?._id}`} className="btn btn-primary">
+                        details
+                      </Link>
                     </th>
                   </tr>
                 </Fragment>
@@ -65,31 +92,19 @@ const AllToys = () => {
           </tfoot>
         </table>
       </div>
-      <div className="w-full my-10 flex justify-center gap-5">
-        <select
-          className="select w-max border-none"
-          onChange={(e) => {
-            setItemsPerPage(e.target.value);
-          }}
-        >
-          <option
-            disabled
-            defaultValue="Select items per page"
-            value={itemsPerPage}
-          >
-            Select items per page
-          </option>
-          {itemsPerPageArray.map((itemsNumber, indx) => (
-            <Fragment key={indx}>
-              <option>{itemsNumber}</option>
-            </Fragment>
-          ))}
-        </select>
+      <div className="w-full my-4 flex justify-center">
         <div className="btn-group">
-          <button className="btn">1</button>
-          <button className="btn btn-active">2</button>
-          <button className="btn">3</button>
-          <button className="btn">4</button>
+          {pages().map((btn) => {
+            return (
+              <button
+                key={btn}
+                className="btn"
+                onClick={() => pageChangeHandler(btn - 1)}
+              >
+                {(btn += 1)}
+              </button>
+            );
+          })}
         </div>
       </div>
     </>

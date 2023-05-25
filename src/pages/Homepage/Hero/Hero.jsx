@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import spiderBg from "../../../assets/images/spiderPosterBg.jpg";
 const Hero = () => {
   return (
@@ -18,9 +19,12 @@ const Hero = () => {
             a realm where childhood dreams take shape, and epic battles between
             heroes and villains unfold in your hands.
           </p>
-          <button className="btn bg-[#ed1d24] hover:bg-red-700 rounded-full">
+          <Link
+            to="/login"
+            className="btn bg-[#ed1d24] hover:bg-red-700 rounded-full"
+          >
             Get Started
-          </button>
+          </Link>
         </div>
       </div>
     </div>

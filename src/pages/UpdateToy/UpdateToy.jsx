@@ -1,6 +1,7 @@
 import { useLoaderData } from "react-router-dom";
 import spiderBg from "../../assets/images/spiderPosterBg.jpg";
 import { useState } from "react";
+import { toast } from "react-toastify";
 const UpdateToy = () => {
   const divStyle = {
     backgroundImage: `url(${spiderBg})`,
@@ -18,11 +19,6 @@ const UpdateToy = () => {
   const updateHandler = (e) => {
     e.preventDefault();
     // const form = e.target;
-    console.log({
-      price,
-      quantity,
-      description,
-    });
     fetch(`${import.meta.env.VITE_BACKEND}/toy/${toyInfo._id}`, {
       method: "PATCH",
       headers: {
@@ -32,11 +28,18 @@ const UpdateToy = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
+        if (data.success) {
+          toast.success("🤩 Yay! Your toy updated.");
+        } else {
+          toast.error(`😪 We can't update your toy.`);
+        }
       });
   };
   return (
-    <div style={divStyle} className="flex justify-center items-center h-screen">
+    <div
+      style={divStyle}
+      className="flex justify-center items-center min-h-screen"
+    >
       <div className="w-full m-5 md:max-w-md p-3 bg-black rounded-md">
         <h1 className="text-4xl font-bold text-red-600 text-center">
           Update Toy Details

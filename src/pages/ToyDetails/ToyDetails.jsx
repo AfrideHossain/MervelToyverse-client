@@ -1,3 +1,4 @@
+import { useLoaderData } from "react-router-dom";
 import spiderBg from "../../assets/images/spiderPosterBg.jpg";
 import { HiStar } from "react-icons/hi2";
 const ToyDetails = () => {
@@ -9,23 +10,11 @@ const ToyDetails = () => {
     backgroundOrigin: "border-box",
     backgroundClip: "border-box",
   };
-
-  const toy = {
-    id: 1,
-    picture: "https://i.ibb.co/y47dSkG/spiderman-3093340-960-720.jpg",
-    name: "Spider Man Action Figure",
-    category: "spiderMan",
-    price: 19.99,
-    sellerName: "john doe",
-    sellerEmail: "johndoe@mail.com",
-    rating: 4.5,
-    descripton:
-      "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatem, molestias blanditiis? Ullam in doloribus vero iure accusamus laudantium dolores iusto quidem voluptas beatae perspiciatis voluptatem, hic praesentium, maiores odio laborum.",
-  };
+  const toy = useLoaderData();
 
   return (
     <>
-      <div style={divStyle} className="h-full">
+      <div style={divStyle} className="min-h-screen flex items-center">
         <div className="mx-auto w-full md:max-w-3xl m-5 bg-black p-4 rounded-md">
           <div className="grid md:grid-cols-2 gap-4 items-center">
             <img src={toy.picture} alt="" className="rounded-md" />
@@ -59,7 +48,7 @@ const ToyDetails = () => {
           <h2 className="text-xl font-semibold text-gray-400 mb-2 mt-4">
             Toy Description
           </h2>
-          <p className="text-base text-white font-medium">{toy.descripton}</p>
+          <p className="text-sm text-white">{toy.description}</p>
         </div>
       </div>
     </>

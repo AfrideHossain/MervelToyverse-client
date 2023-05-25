@@ -1,10 +1,20 @@
 import { Fragment, useEffect, useState } from "react";
 import { HiOutlineTrash, HiOutlinePencilSquare } from "react-icons/hi2";
 import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const MyToys = () => {
-  // TODO pagination
   const [toys, setToys] = useState();
+
+  // swal style
+  const swalDeleteAlert = Swal.mixin({
+    customClass: {
+      confirmButton: "btn btn-primary mx-2",
+      cancelButton: "btn mx-2",
+    },
+    buttonsStyling: false,
+  });
+
   useEffect(() => {
     let fetchedToys = fetch(`${import.meta.env.VITE_BACKEND}/mytoys`, {
       method: "GET",
@@ -21,13 +31,39 @@ const MyToys = () => {
       });
   }, [toys]);
   const deleteToy = (id) => {
-    let fetchedToys = fetch(`${import.meta.env.VITE_BACKEND}/toy/${id}`, {
-      method: "DELETE",
-    });
-    fetchedToys
-      .then((res) => res.json())
-      .then((deleteRes) => {
-        console.log(deleteRes);
+    swalDeleteAlert
+      .fire({
+        title: "You want to delete the toy?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Yes, delete it!",
+        cancelButtonText: "No, cancel!",
+        reverseButtons: true,
+      })
+      .then((result) => {
+        if (result.isConfirmed) {
+          let deleteToy = fetch(`${import.meta.env.VITE_BACKEND}/toy/${id}`, {
+            method: "DELETE",
+          });
+          deleteToy
+            .then((res) => res.json())
+            .then((deleteRes) => {
+              if (deleteRes.success) {
+                swalDeleteAlert.fire(
+                  "Deleted!",
+                  "Your toy has been deleted.",
+                  "success"
+                );
+              }
+            });
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+          swalDeleteAlert.fire(
+            "Cancelled",
+            "Don't worry, your toy is safe :)",
+            "error"
+          );
+        }
       });
   };
   return (

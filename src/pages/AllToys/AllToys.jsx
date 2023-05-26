@@ -31,9 +31,29 @@ const AllToys = () => {
         setToys(fetchedRes.toys);
       });
   }, [currentPage]);
+
+  const searchHandler = (searchStr) => {
+    const searchedToys = totalToys.filter((toy) =>
+      toy.name.toLowerCase().includes(searchStr.toLowerCase())
+    );
+    setToys(searchedToys);
+  };
   return (
     <>
-      <div className="overflow-x-auto w-screen">
+      <div className="overflow-x-auto">
+        {/* search section  */}
+        <div className="flex justify-center p-5">
+          <div className="form-control">
+            <input
+              type="text"
+              placeholder="Search by name..."
+              onChange={(e) => {
+                searchHandler(e.target.value);
+              }}
+              className="input input-bordered w-full md:w-96"
+            />
+          </div>
+        </div>
         <table className="table table-normal w-full">
           {/* head */}
           <thead>

@@ -1,6 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContextProvider";
 import { useContext, useState } from "react";
+import avengers_logo from "../../assets/avengers_logo.png";
 const Navbar = () => {
   const { user, userLogout } = useContext(AuthContext);
   const [showUsername, setShowUsername] = useState(false);
@@ -52,6 +53,7 @@ const Navbar = () => {
             </li>
           </ul>
         </div>
+        <img src={avengers_logo} className="w-8" alt="" />
         <Link className="btn btn-ghost normal-case text-xl" to="/">
           Marvel Toyverse
         </Link>

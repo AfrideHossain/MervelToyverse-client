@@ -69,7 +69,7 @@ const MyToys = () => {
   return (
     <>
       <div className="overflow-x-auto w-screen">
-        <table className="table table-normal w-full">
+        <table className="table table-normal w-full my-5">
           {/* head */}
           <thead>
             <tr>

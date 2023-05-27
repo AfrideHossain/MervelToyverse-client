@@ -1,12 +1,15 @@
 import { HiEnvelope, HiOutlineKey } from "react-icons/hi2";
 import { FaGoogle } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../context/AuthContextProvider";
 import { useContext, useState } from "react";
 import { toast } from "react-toastify";
 const Login = () => {
   const { userLoginWithEmailAndPass, googleSignIn } = useContext(AuthContext);
   const [error, setError] = useState("");
+  const navigate = useNavigate();
+  const location = useLocation();
+  const pathFromState = location?.state?.from?.pathname || "/";
 
   const loginHandler = (event) => {
     event.preventDefault();
@@ -14,9 +17,8 @@ const Login = () => {
     let email = form.email?.value;
     let pass = form.password?.value;
     userLoginWithEmailAndPass(email, pass)
-      .then((loggedInUser) => {
-        let user = loggedInUser.user;
-        console.log(user.displayName);
+      .then(() => {
+        navigate(pathFromState, { replace: true });
       })
       .catch((err) => {
         console.log(err);
@@ -26,9 +28,8 @@ const Login = () => {
   };
   const googleSignInHandler = () => {
     googleSignIn()
-      .then((loggedInUser) => {
-        let user = loggedInUser.user;
-        console.log(user.displayName);
+      .then(() => {
+        navigate(pathFromState, { replace: true });
       })
       .catch((err) => {
         console.log(err);

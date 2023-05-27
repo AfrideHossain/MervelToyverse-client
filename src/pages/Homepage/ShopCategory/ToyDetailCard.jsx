@@ -18,7 +18,10 @@ const ToyDetailCard = ({ toyInfo }) => {
           <HiStar className="h-5 w-5 text-[#ed1d24]" /> {toyInfo?.rating}
         </p>
         <div className="card-actions justify-end">
-          <Link className="btn btn-primary bg-[#ed1d24] border-0 rounded-full hover:bg-red-700">
+          <Link
+            className="btn btn-primary bg-[#ed1d24] border-0 rounded-full hover:bg-red-700"
+            to={`/toy/${toyInfo._id}`}
+          >
             View Details
           </Link>
         </div>

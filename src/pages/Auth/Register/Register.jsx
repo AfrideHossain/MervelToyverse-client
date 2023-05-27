@@ -1,6 +1,6 @@
 import { HiEnvelope, HiOutlineKey, HiUser, HiPhoto } from "react-icons/hi2";
 import { FaGoogle } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useContext, useState } from "react";
 import { AuthContext } from "../../../context/AuthContextProvider";
 import { updateProfile } from "firebase/auth";
@@ -9,6 +9,9 @@ import { toast } from "react-toastify";
 const Register = () => {
   const { userCreateWithEmailAndPass, googleSignIn } = useContext(AuthContext);
   const [error, setError] = useState("");
+  const navigate = useNavigate();
+  const location = useLocation();
+  const pathFromState = location?.state?.from?.pathname || "/";
 
   const registerHandler = (event) => {
     event.preventDefault();
@@ -25,7 +28,9 @@ const Register = () => {
           displayName: username,
           photoURL: photourl,
         })
-          .then(() => {})
+          .then(() => {
+            navigate(pathFromState, { replace: true });
+          })
           .catch((err) => {
             console.log(err);
           });
@@ -39,9 +44,8 @@ const Register = () => {
 
   const googleSignInHandler = () => {
     googleSignIn()
-      .then((loggedInUser) => {
-        let user = loggedInUser.user;
-        console.log(user.displayName);
+      .then(() => {
+        navigate(pathFromState, { replace: true });
       })
       .catch((err) => {
         console.log(err);

@@ -2,6 +2,7 @@ import Hero from "./Hero/Hero";
 import PhotoGallery from "./PhotoGallery/PhotoGallery";
 import spiderBg from "../../assets/images/spiderPosterBg.jpg";
 import ShopCategory from "./ShopCategory/ShopCategory";
+import Slider from "./Slider/Slider";
 
 const Homepage = () => {
   const divStyle = {
@@ -18,6 +19,7 @@ const Homepage = () => {
         <Hero />
         <PhotoGallery />
         <ShopCategory />
+        <Slider />
       </div>
     </>
   );

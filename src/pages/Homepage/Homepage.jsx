@@ -3,6 +3,7 @@ import PhotoGallery from "./PhotoGallery/PhotoGallery";
 import spiderBg from "../../assets/images/spiderPosterBg.jpg";
 import ShopCategory from "./ShopCategory/ShopCategory";
 import Slider from "./Slider/Slider";
+import YourOpinion from "./YourOpinion/YourOpinion";
 
 const Homepage = () => {
   const divStyle = {
@@ -20,6 +21,7 @@ const Homepage = () => {
         <PhotoGallery />
         <ShopCategory />
         <Slider />
+        <YourOpinion />
       </div>
     </>
   );
